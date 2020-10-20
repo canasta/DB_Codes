@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copy table data from MSSQL DB to MySQL DB
 # USE: Fix config and query, at line 8-23, 26-28, and 40-45
-
 import pymssql
 import pymysql
 
