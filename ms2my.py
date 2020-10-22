@@ -34,8 +34,8 @@ logcnt = len(table)
 q=''
 try:
     with mydb.cursor() as cur:
-        for l in range(0, logcnt, 10000):
-            llrange = min(10000, logcnt-l)
+        for l in range(0, logcnt, 100000):
+            llrange = min(100000, logcnt-l)
 #========= FIX HERE =========#
             q = '''INSERT INTO MSSQL_TARGET_TABLE 
             (STRING_COLUMN1, STRING_COLUMN2, INT_COLUMN1)
