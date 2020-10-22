@@ -44,8 +44,8 @@ try:
             cur.executemany(q, table[l:l+llrange])
             
             mydb.commit()
+            print('%d/%d'%(l+llrange, logcnt))
         cur.close()
-        print('%d/%d'%(l+llrange, logcnt))
 except:
     mydb.rollback()
     print('insert failed. rollback')
