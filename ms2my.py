@@ -33,24 +33,17 @@ msdb.close()
 logcnt = len(table)
 q=''
 try:
-    for l in range(0, logcnt, 10000):
-        llrange = min(10000, logcnt-l)
-        with mydb.cursor() as cur:
-            for ll in range(llrange):
-                log = table[l+ll]
-                if log[2] is None:
-                    log = list(log)
-                    log[2] = 0
+    with mydb.cursor() as cur:
+        for l in range(0, logcnt, 10000):
+            llrange = min(10000, logcnt-l)
 #========= FIX HERE =========#
-                q = '''INSERT INTO MSSQL_TARGET_TABLE 
-                (STRING_COLUMN1, STRING_COLUMN2, INT_COLUMN1) VALUES('''
-                '%s','%s',%d)
-                '''%(log[0],log[1],log[2])
+            q = '''INSERT INTO MSSQL_TARGET_TABLE 
+            (STRING_COLUMN1, STRING_COLUMN2, INT_COLUMN1)
+            VALUES(%s,%s,%s)'''
 #============================#
-                q=q.replace('\'None\'','NULL')
-    
-                cur.execute(q)
-        mydb.commit()
+            cur.executemany(q, table[l:l+llrange])
+            
+            mydb.commit()
         cur.close()
         print('%d/%d'%(l+llrange, logcnt))
 except:
